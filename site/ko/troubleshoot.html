@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mumu · 문제 해결</title><link rel="stylesheet" href="../assets/site.css"></head>
+<body><a class="skip" href="#main">본문으로</a>
+<header><a href="start.html">mumu</a> · <a lang="en" href="../en/start.html">en</a>
+<details><summary>메뉴</summary><nav aria-label="Guide"><ul><li><a href="start.html">시작</a></li><li><a href="install.html">설치</a></li><li><a href="connect.html">연결</a></li><li><a href="agent-setup.html">에이전트 설정</a></li><li><a href="agent-usage.html">에이전트 사용</a></li><li><a href="cli-usage.html">CLI 사용</a></li><li><a href="troubleshoot.html">문제 해결</a></li><li><a href="maintain.html">유지 관리</a></li></ul></nav></details></header>
+<main id="main" tabindex="-1"><h1>문제 해결</h1><p>수신자는 실패한 단계를 중단한다. 아래 해당 복구를 수행한다. 원래 명령을 다시 실행하고 성공한 뒤 진행한다. 계속 실패하면 키를 발급한 관리자에게 비공개로 문의한다. 클라이언트·에이전트 버전과 비밀을 제거한 오류 종류만 전달한다. 키나 인증 응답을 보내지 않는다.</p>
+<table><tr><th>관찰</th><th>복구와 완료 조건</th></tr>
+<tr><td>Python 없음 또는 버전 불일치</td><td>승인된 방법으로 선택한 3.11 또는 3.15를 설치한다. --version이 해당 버전을 출력해야 한다.</td></tr>
+<tr><td>의존성 설치 불가</td><td>공개 인덱스·네트워크 정책을 비공개로 점검하고 비공개 인덱스 없이 격리 설치를 재시도한다. mcp==2.3.0과 httpx2==2.16.0을 바꾸지 않는다. 해결되지 않으면 설치는 차단 상태다.</td></tr>
+<tr><td>mumu 없음 또는 다른 PATH</td><td>선택한 환경을 활성화하거나 그 환경의 bin/mumu 절대 경로를 쓴다. command -v mumu가 환경 안을 가리켜야 한다.</td></tr>
+<tr><td>키 없음 / 401</td><td>숨김 입력을 다시 수행하고 에이전트를 재시작한다. 또 거부되면 관리자에게 기존 권한을 비공개로 점검받는다. 이 가이드로 키를 요청하거나 발급하지 않는다.</td></tr>
+<tr><td>호스트 거부</td><td>설정과 비공개로 받은 HTTPS 기본 URL을 비교한다. 호스트 검사를 우회하거나 서버를 바꾸지 않는다. 계속 실패하면 관리자에게 문의한다.</td></tr>
+<tr><td>시간 초과 / 프로토콜 불일치</td><td>승인된 네트워크 접근과 Streamable HTTP 기능을 살피고 한 번 재시도한다. 실패하면 오류 종류를 비공개로 보고한다. 전송 방식을 바꾸지 않는다.</td></tr>
+<tr><td>할당량 오류</td><td>반환된 초기화 시간까지 기다린 뒤 한 번 재시도한다. 반복 탐색하거나 할당량을 소진하지 않는다.</td></tr>
+<tr><td>오래된 폼 버전</td><td>get_intake_form을 다시 받고 반환된 버전과 본인 문제로 답을 새로 작성한다. 캐시 버전 문자열만 바꾸거나 답을 만들지 않는다.</td></tr>
+<tr><td>잘못된 JSON 또는 읽을 수 없는 파일</td><td>비공개 입력 JSON과 권한을 고친다. 같은 명령을 다시 실행해 성공한 JSON 출력을 요구한다.</td></tr></table>
+</main><footer>mumu · Apache-2.0</footer></body></html>

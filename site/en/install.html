@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mumu · Install</title><link rel="stylesheet" href="../assets/site.css"></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header><a href="start.html">mumu</a> · <a lang="ko" href="../ko/start.html">ko</a>
+<details><summary>Menu</summary><nav aria-label="Guide"><ul><li><a href="start.html">Start</a></li><li><a href="install.html">Install</a></li><li><a href="connect.html">Connect</a></li><li><a href="agent-setup.html">Agent setup</a></li><li><a href="agent-usage.html">Agent usage</a></li><li><a href="cli-usage.html">CLI usage</a></li><li><a href="troubleshoot.html">Troubleshoot</a></li><li><a href="maintain.html">Maintain</a></li></ul></nav></details></header>
+<main id="main" tabindex="-1"><h1>Install the client</h1>
+<p>Installation lifecycle was measured on macOS arm64 with Python 3.11.14/3.15.0 and Linux aarch64 with Python 3.11.18/3.15.2, each with Bash and Zsh. See <a href="maintain.html">coverage and limitations</a>. Direct MCP needs neither Python nor this installation.</p>
+<ol><li>Run <code>python3.11 --version</code> (or <code>python3.15 --version</code>). The output must report the selected version. If it is missing, install that supported Python through your organization's approved method before continuing.</li>
+<li>Download each file with the six curl commands below. Continue only when each command exits zero. If any URL is unavailable, stop; do not substitute a floating latest URL.</li>
+<li>Run the SHA-256 command. It must print <code>SHA-256 OK</code>. Compare the wheel hash with the approved hash supplied privately by your administrator. If either comparison fails, delete the downloads and stop. A checksum from the same download origin alone does not prove authenticity.</li>
+<li>Read LICENSE, NOTICE and DISTRIBUTION-NOTICE.txt. The identified first-party client is Apache-2.0; no personal owner permission is required to exercise its license rights. Service access still requires existing authorization.</li>
+<li>Create the isolated environment and run its pip install command below. Continue only when both commands exit zero. Public dependencies must resolve without private indexes or caches. If resolution fails, follow <a href="troubleshoot.html">Troubleshoot</a>; do not replace the pinned dependencies.</li>
+<li>Activate that environment and run the final three checks below. The executable must be inside that environment, help must exit zero, and metadata must print 0.1.0. If another executable appears, use the environment's absolute executable path.</li></ol>
+<p>The block uses Python 3.11. For the required Python 3.15 cell, replace both <code>python3.11</code> occurrences and the checksum command's interpreter with <code>python3.15</code>. Run each command separately.</p>
+<pre><code># Recipient: run each step separately. Stop if a command fails.
+curl --fail --location --remote-name &#x27;https://github.com/MoonKibong/mumu-releases/releases/download/v0.1.0/mumu-0.1.0-py3-none-any.whl&#x27;
+curl --fail --location --remote-name &#x27;https://github.com/MoonKibong/mumu-releases/releases/download/v0.1.0/SHA256SUMS&#x27;
+curl --fail --location --remote-name &#x27;https://github.com/MoonKibong/mumu-releases/releases/download/v0.1.0/LICENSE&#x27;
+curl --fail --location --remote-name &#x27;https://github.com/MoonKibong/mumu-releases/releases/download/v0.1.0/NOTICE&#x27;
+curl --fail --location --remote-name &#x27;https://github.com/MoonKibong/mumu-releases/releases/download/v0.1.0/DISTRIBUTION-NOTICE.txt&#x27;
+curl --fail --location --remote-name &#x27;https://github.com/MoonKibong/mumu-releases/releases/download/v0.1.0/RELEASE-NOTES.txt&#x27;
+python3.11 -c &#x27;import hashlib,pathlib; rows=[line.split(&quot;  &quot;) for line in pathlib.Path(&quot;SHA256SUMS&quot;).read_text().splitlines()]; expected={&quot;mumu-0.1.0-py3-none-any.whl&quot;,&quot;DISTRIBUTION-NOTICE.txt&quot;,&quot;RELEASE-NOTES.txt&quot;,&quot;LICENSE&quot;,&quot;NOTICE&quot;,&quot;mumu-0.1.0-client-source.zip&quot;}; assert len(rows)==len(expected) and {n for h,n in rows}==expected; assert all(hashlib.sha256(pathlib.Path(n).read_bytes()).hexdigest()==h for h,n in rows if n!=&quot;mumu-0.1.0-client-source.zip&quot;); print(&quot;SHA-256 OK&quot;)&#x27;
+python3.11 -m venv &quot;$HOME/.local/share/mumu/0.1.0&quot;
+&quot;$HOME/.local/share/mumu/0.1.0/bin/python&quot; -m pip install &#x27;./mumu-0.1.0-py3-none-any.whl&#x27;
+. &quot;$HOME/.local/share/mumu/0.1.0/bin/activate&quot;
+command -v mumu
+mumu --help
+python -c &#x27;import importlib.metadata; assert importlib.metadata.version(&quot;mumu&quot;)==&quot;0.1.0&quot;; print(&quot;0.1.0&quot;)&#x27;
+</code></pre>
+<p>Activation changes PATH only in the current session. This procedure does not edit shell startup files. See <a href="connect.html">Connect</a> for session credentials.</p>
+
+<p>The <a href="https://github.com/MoonKibong/mumu-releases/releases/download/v0.1.0/mumu-0.1.0-client-source.zip">client-only source ZIP</a> contains build instructions in README.txt. Before building, compare its SHA-256 with SHA256SUMS and the exact approved hash supplied privately by your administrator. If either differs, stop. This archive is generated from the allowlisted client export.</p>
+</main><footer>mumu · Apache-2.0</footer></body></html>

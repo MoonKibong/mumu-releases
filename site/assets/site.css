@@ -1,0 +1,19 @@
+/* Original mumu guide styles. No external fonts, scripts or analytics. */
+:root { color-scheme: light dark; font-family: system-ui, sans-serif; line-height: 1.65; }
+body { margin: 0 auto; max-width: 72rem; padding: 1.2rem; }
+a { color: light-dark(#1456a0, #91c4ff); text-underline-offset: .18em; }
+a:focus-visible, summary:focus-visible { outline: 3px solid #e59000; outline-offset: 4px; }
+header { border-bottom: 1px solid #888; padding-bottom: 1rem; }
+nav ul { display: flex; flex-wrap: wrap; gap: .6rem 1.3rem; padding-left: 1.3rem; }
+main { max-width: 56rem; margin: 2rem auto; overflow-wrap: anywhere; }
+pre { overflow-x: auto; padding: 1rem; border: 1px solid #888; border-radius: .4rem; }
+code { font-family: ui-monospace, monospace; }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; border: 1px solid #888; padding: .5rem; }
+.notice { padding: 1rem; border-left: 4px solid #d18b11; }
+.skip { position: absolute; top: -10rem; }
+.skip:focus { position: static; }
+summary { cursor: pointer; padding: .5rem 0; }
+footer { border-top: 1px solid #888; padding-top: 1rem; }
+@media (max-width: 40rem) { body { padding: .8rem; } nav ul { display: block; } nav li { margin: .5rem 0; } }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }

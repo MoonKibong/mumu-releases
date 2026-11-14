@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mumu · 유지 관리</title><link rel="stylesheet" href="../assets/site.css"></head>
+<body><a class="skip" href="#main">본문으로</a>
+<header><a href="start.html">mumu</a> · <a lang="en" href="../en/start.html">en</a>
+<details><summary>메뉴</summary><nav aria-label="Guide"><ul><li><a href="start.html">시작</a></li><li><a href="install.html">설치</a></li><li><a href="connect.html">연결</a></li><li><a href="agent-setup.html">에이전트 설정</a></li><li><a href="agent-usage.html">에이전트 사용</a></li><li><a href="cli-usage.html">CLI 사용</a></li><li><a href="troubleshoot.html">문제 해결</a></li><li><a href="maintain.html">유지 관리</a></li></ul></nav></details></header>
+<main id="main" tabindex="-1"><h1>클라이언트 유지 관리</h1>
+<p>수신자가 수행한다. mumu 0.1.0의 명시된 자사 자료는 Apache-2.0을 사용한다. 설치 수명주기는 macOS arm64의 Python 3.11.14/3.15.0과 Linux aarch64의 Python 3.11.18/3.15.2에서 각각 Bash와 Zsh로 측정했다. 새 환경의 공개 의존성 해결, 숨겨진 세션 입력, 자식 프로세스 상속, 활성화된 PATH, Apache 메타데이터·고지, help, 같은 버전 재설치와 삭제를 확인했다. 각 런타임은 mumu와 타사 28개를 합친 배포판 29개를 해결했으며 고지 파일·다운로드 해시를 기록했다. 이 목록은 법률 승인이 아니다. 내보낸 소스의 빌드·설치는 macOS arm64 Python 3.11.14에서만 측정했다.</p>
+<p>과거의 도구 5개 검색, 프로토콜 협상(2025-11-25), 설치된 CLI·intake와 Codex CLI 0.167.1/Claude Code 2.1.322의 명시적 도구 호출은 변경되지 않은 런타임·템플릿 입력에 적용된다. 다시 빌드한 모든 wheel의 인증, 현재 배포·에이전트 버전이나 모델 주도 동작을 입증하지 않는다. 두 에이전트 검사 모두 모델 호출은 0회였다. 다른 프로토콜 버전은 미검증이다.</p>
+<p>Chrome 157.0.8103.51에서 EN/KO 시작·설치·유지 관리의 390×728 화면, EN 유지 관리의 1280×800 화면, EN/KO 설치의 키보드 탐색과 EN 시작의 LICENSE 링크를 검사했다. 명시된 가이드 화면과 반응형 에뮬레이션의 범위이며 실제 모바일 기기나 인증된 브라우저 MCP를 인증하지 않는다. 다른 운영체제·아키텍처·런타임 버전·브라우저 화면은 미검증이다. 최초 릴리스이므로 버전 간 업그레이드나 복구에 사용할 이전 릴리스는 없다.</p>
+<ol><li>승인된 업그레이드는 새 환경에서 해당 버전의 고정 다운로드·해시 절차를 따른다. 예상 메타데이터 버전과 비공개 인증 호출의 성공을 확인한 뒤 환경을 전환한다. 그때까지 이전 승인 환경을 유지한다. 기존 버전의 자산을 덮어쓰지 않는다.</li>
+<li>같은 버전을 재설치하려면 해시 검증 후 선택한 격리 환경에서 <code>python -m pip install --force-reinstall ./mumu-0.1.0-py3-none-any.whl</code>을 실행한다. 설치 페이지의 help·메타데이터 명령을 다시 실행한다. 둘 다 예상 클라이언트를 가리켜야 한다. 의존성 해결에 실패하면 작동하는 환경을 보존하고 비공개 지원에 문의한다.</li>
+<li>삭제하려면 선택한 환경에서 <code>python -m pip uninstall mumu</code>를 실행한다. <code>python -m pip show mumu</code>를 실행한다. 패키지가 없다고 보고해야 한다. 실행 중인 에이전트를 종료하고 MUMU_API_KEY를 해제한다.</li>
+<li>릴리스가 철회되면 해당 다운로드 추천을 사용하지 않는다. 이전 산출물이 없는 최초 릴리스는 삭제한다. 이후 릴리스는 승인된 이전 버전과 원래 체크섬·격리 환경만 사용하고 인증을 다시 시험한다. 해당 산출물이 생기기 전까지 버전 간 복구는 미검증이다.</li></ol>
+<p>비공개 지원은 키를 전달한 관리자에게 같은 비공개 채널로 문의한다. 공개 이슈에 서비스 URL, 문제, 조회 내용, 비밀을 넣지 않는다. 유출 의심은 즉시 관리자에게 전달한다. 공개 삭제로 이미 복제된 내용을 회수할 수 없다. 이 릴리스에는 서버 마이그레이션이 없다.</p>
+</main><footer>mumu · Apache-2.0</footer></body></html>

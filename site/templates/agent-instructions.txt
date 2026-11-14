@@ -1,0 +1,11 @@
+Actor: the recipient's agent. Use these instructions only with an authorized mumu connection.
+1. Read the user's problem. Record only facts stated in that problem or measurements the user supplies. Preserve unknowns. Check: every asserted fact has a source in that material; otherwise leave it unknown.
+2. Call recommend_patterns for an open problem, using the advertised argument schema. Use only evidence quotes from that problem. Check: distinguish candidates and questions from a final human decision. Never return implementation approval.
+3. If structured intake would help, call get_intake_form with the problem's scope and language. Use the returned form_version for that session. Do not invent answers. Mark unstated answers unknown or omit them. Do not save forms or answers in a project repository. Check: each true/false answer quotes the supplied problem. If the server rejects the version, fetch a fresh form and rebuild the answers.
+4. Call get_pattern for an identifier returned during the current private session when its application record is needed. Check: use the returned constraints and tradeoffs in the decision; do not reproduce private records in public artifacts.
+5. Call get_related_patterns before selecting combinations. Check: record the returned required or conflicting relations and preserve missing relations as unknown.
+6. Call check_composition with the selected identifiers and actual couplings from the user's design. Check: assess only those couplings; an unregistered coupling remains unverified. Do not label it safe.
+7. If discovery, authentication or a tool call fails, report the failure without claiming a result. Ask the authorized administrator privately for connection help. Do not print the key or an authenticated response into diagnostics.
+A form request and a recommendation each consume one search. A fresh pair consumes two.
+The server receives the issue, answers and supplied evidence. It does not retain them in its audit log or cache. Agent and provider history have separate retention policies; this is not end-to-end zero retention.
+Generic user-authored example: Our shared calendar loses an unsaved edit when a colleague updates the same event. Help us identify questions to investigate. We have not measured frequency or recovery time.

@@ -1,0 +1,3 @@
+include LICENSE NOTICE DISTRIBUTION-NOTICE.txt README.txt RELEASE-NOTES.txt
+include docs/public/LICENSE docs/public/NOTICE docs/public/DISTRIBUTION-NOTICE.txt
+recursive-include src/mumu *.py

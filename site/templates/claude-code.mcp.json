@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "mumu": {
+      "type": "http",
+      "url": "https://mumu.example.invalid/mcp",
+      "headers": {
+        "Authorization": "Bearer ${MUMU_API_KEY}"
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mumu"
+version = "0.1.0"
+description = "Thin remote client for the hosted mumu pattern recommendation service"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["docs/public/LICENSE", "docs/public/NOTICE", "docs/public/DISTRIBUTION-NOTICE.txt"]
+authors = [{name = "MoonKibong", email = "kibong.moon@gmail.com"}]
+dependencies = [
+    "mcp==2.3.0",
+    "httpx2==2.16.0",
+]
+
+[project.scripts]
+mumu = "mumu.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools]
+include-package-data = false

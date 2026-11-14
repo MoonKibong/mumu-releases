@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mumu · 에이전트 사용</title><link rel="stylesheet" href="../assets/site.css"></head>
+<body><a class="skip" href="#main">본문으로</a>
+<header><a href="start.html">mumu</a> · <a lang="en" href="../en/start.html">en</a>
+<details><summary>메뉴</summary><nav aria-label="Guide"><ul><li><a href="start.html">시작</a></li><li><a href="install.html">설치</a></li><li><a href="connect.html">연결</a></li><li><a href="agent-setup.html">에이전트 설정</a></li><li><a href="agent-usage.html">에이전트 사용</a></li><li><a href="cli-usage.html">CLI 사용</a></li><li><a href="troubleshoot.html">문제 해결</a></li><li><a href="maintain.html">유지 관리</a></li></ul></nav></details></header>
+<main id="main" tabindex="-1"><h1>의사결정을 돕는 도구 사용</h1>
+<p>수신자는 연결된 에이전트에 아래 카탈로그 없는 지시문을 원하는 지시 방식으로 전달한다. 다음 결과에서 아래 도구 지침을 따랐는지, 미확인 사항을 명시했는지 살핀다. 승인을 선언하거나 사실을 만들면 중단하고 지시를 바로잡은 뒤 결과를 사용한다. 제품별 지시 파일은 필요 없다.</p>
+<p>에이전트는 사용자 문제나 측정에서만 사실과 인용을 얻는다. get_intake_form은 선택 사항이며 반환된 form_version을 사용한다. 답을 만들지 않고 모르면 unknown 또는 생략한다. 폼과 답을 저장소에 캐시하지 않는다. get_pattern으로 적용 기록을 읽고 get_related_patterns로 관계를 살핀 뒤 실제 결합을 check_composition으로 검사한다. 미등록 결합은 미검증이며 구현 승인을 뜻하지 않는다.</p>
+<p>폼 요청과 추천 요청은 각각 검색 한 번이며 새 폼·추천 쌍은 두 번이다. 서버는 문제·답·근거를 받지만 감사 로그와 캐시에 보관하지 않는다. 에이전트와 제공자의 보존 정책은 별개다. 처음부터 끝까지 무보존이라고 설명하지 않는다.</p>
+<pre><code>Actor: the recipient&#x27;s agent. Use these instructions only with an authorized mumu connection.
+1. Read the user&#x27;s problem. Record only facts stated in that problem or measurements the user supplies. Preserve unknowns. Check: every asserted fact has a source in that material; otherwise leave it unknown.
+2. Call recommend_patterns for an open problem, using the advertised argument schema. Use only evidence quotes from that problem. Check: distinguish candidates and questions from a final human decision. Never return implementation approval.
+3. If structured intake would help, call get_intake_form with the problem&#x27;s scope and language. Use the returned form_version for that session. Do not invent answers. Mark unstated answers unknown or omit them. Do not save forms or answers in a project repository. Check: each true/false answer quotes the supplied problem. If the server rejects the version, fetch a fresh form and rebuild the answers.
+4. Call get_pattern for an identifier returned during the current private session when its application record is needed. Check: use the returned constraints and tradeoffs in the decision; do not reproduce private records in public artifacts.
+5. Call get_related_patterns before selecting combinations. Check: record the returned required or conflicting relations and preserve missing relations as unknown.
+6. Call check_composition with the selected identifiers and actual couplings from the user&#x27;s design. Check: assess only those couplings; an unregistered coupling remains unverified. Do not label it safe.
+7. If discovery, authentication or a tool call fails, report the failure without claiming a result. Ask the authorized administrator privately for connection help. Do not print the key or an authenticated response into diagnostics.
+A form request and a recommendation each consume one search. A fresh pair consumes two.
+The server receives the issue, answers and supplied evidence. It does not retain them in its audit log or cache. Agent and provider history have separate retention policies; this is not end-to-end zero retention.
+Generic user-authored example: Our shared calendar loses an unsaved edit when a colleague updates the same event. Help us identify questions to investigate. We have not measured frequency or recovery time.
+</code></pre>
+<p><a href="../templates/agent-instructions.txt">동일한 공통 지시문 내려받기</a>. 민감한 문제를 보내기 전에 에이전트·제공자 보존 정책을 읽는다. 조회 기록·폼·답을 공개 산출물에 저장하지 않는다.</p>
+</main><footer>mumu · Apache-2.0</footer></body></html>

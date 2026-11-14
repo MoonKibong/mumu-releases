@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mumu · 연결</title><link rel="stylesheet" href="../assets/site.css"></head>
+<body><a class="skip" href="#main">본문으로</a>
+<header><a href="start.html">mumu</a> · <a lang="en" href="../en/start.html">en</a>
+<details><summary>메뉴</summary><nav aria-label="Guide"><ul><li><a href="start.html">시작</a></li><li><a href="install.html">설치</a></li><li><a href="connect.html">연결</a></li><li><a href="agent-setup.html">에이전트 설정</a></li><li><a href="agent-usage.html">에이전트 사용</a></li><li><a href="cli-usage.html">CLI 사용</a></li><li><a href="troubleshoot.html">문제 해결</a></li><li><a href="maintain.html">유지 관리</a></li></ul></nav></details></header>
+<main id="main" tabindex="-1"><h1>비공개 연결</h1>
+<p>수신자가 수행한다. CLI에는 서비스 기본 URL을 전달한다. CLI가 <code>/mcp</code>를 붙인다. 직접 MCP 설정에는 <code>/mcp</code>로 끝나는 전체 HTTPS URL을 쓴다. <code>https://mumu.example.invalid</code>는 의도적으로 연결할 수 없는 자리표시자다.</p>
+<ol><li>현재 셸에서 <code>MUMU_BASE_URL='https://mumu.example.invalid'</code>의 자리표시자를 비공개로 받은 기본 URL로 바꿔 설정한다. <code>/mcp</code> 접미사가 없는 기본 URL을 쓴다. URL에 키, 사용자 정보, 쿼리 문자열을 넣지 않는다.</li>
+<li>현재 대화형 셸에서 아래 해당 스니펫을 source하고 숨김 프롬프트에 키를 입력한다. <code>test -n "$MUMU_API_KEY"</code>를 실행한다. 0으로 종료되어야 한다. 실패하면 중단하고 비공개로 다시 입력한다. 변수 값을 출력하지 않는다.</li>
+<li>같은 셸에서 에이전트를 시작하거나 완전히 재시작한다. <a href="agent-setup.html">에이전트 설정</a>에 따라 다섯 도구 검색과 인증 호출이 성공한 뒤 사용한다. 실행 중인 에이전트는 이후 변경된 환경을 상속하지 못한다. CLI를 선택했으면 <a href="cli-usage.html">CLI 사용</a>의 첫 추천 명령을 실행하고 성공한 JSON 응답을 요구한다.</li></ol>
+<h2>Bash 세션</h2><pre><code># Recipient: source this file in an interactive bash session with tracing disabled.
+# Do not execute it as a child process: the agent must inherit this shell&#x27;s environment.
+set +x
+IFS= read -r -s -p &quot;Mumu API key: &quot; MUMU_API_KEY || return 1
+printf &#x27;\n&#x27;
+[ -n &quot;$MUMU_API_KEY&quot; ] || return 1
+export MUMU_API_KEY
+# Success: test -n &quot;$MUMU_API_KEY&quot;. Do not print its value.
+</code></pre>
+<h2>Zsh 세션</h2><pre><code># Recipient: source this file in an interactive zsh session with tracing disabled.
+# Do not execute it as a child process: the agent must inherit this shell&#x27;s environment.
+set +x
+IFS= read -r -s &quot;MUMU_API_KEY?Mumu API key: &quot; || return 1
+printf &#x27;\n&#x27;
+[ -n &quot;$MUMU_API_KEY&quot; ] || return 1
+export MUMU_API_KEY
+# Success: test -n &quot;$MUMU_API_KEY&quot;. Do not print its value.
+</code></pre>
+<p>키를 인자, URL, 채팅, 추적 파일, 브라우저 폼·저장소, 진단 로그에 넣지 않는다. 설치 도구가 영구 export를 만들지 않는다. 운영자 기기에서 영구 환경 설정을 별도로 요청한 경우 운영자는 export를 <code>~/.config/shell/env.sh</code>에만 둔다. 시작 프로필을 수정하지 않는다. 세션 종료 시 <code>unset MUMU_API_KEY</code>를 실행하고 에이전트를 종료한다.</p>
+</main><footer>mumu · Apache-2.0</footer></body></html>

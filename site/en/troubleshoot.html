@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mumu · Troubleshoot</title><link rel="stylesheet" href="../assets/site.css"></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header><a href="start.html">mumu</a> · <a lang="ko" href="../ko/start.html">ko</a>
+<details><summary>Menu</summary><nav aria-label="Guide"><ul><li><a href="start.html">Start</a></li><li><a href="install.html">Install</a></li><li><a href="connect.html">Connect</a></li><li><a href="agent-setup.html">Agent setup</a></li><li><a href="agent-usage.html">Agent usage</a></li><li><a href="cli-usage.html">CLI usage</a></li><li><a href="troubleshoot.html">Troubleshoot</a></li><li><a href="maintain.html">Maintain</a></li></ul></nav></details></header>
+<main id="main" tabindex="-1"><h1>Troubleshoot</h1><p>Stop the affected step on failure. Use the corresponding recovery below; retry the original command and require success. Contact your issuing administrator privately if it still fails. Send only the client/agent version and sanitized error category, never keys or authenticated responses.</p>
+<table><tr><th>Observation</th><th>Recovery and check</th></tr>
+<tr><td>Python missing or incompatible</td><td>Install the selected 3.11 or 3.15 runtime through your approved method; its --version must report that version.</td></tr>
+<tr><td>Dependency unavailable</td><td>Check public index/network policy privately. Retry isolated installation without private indexes. Do not replace mcp==2.3.0 or httpx2==2.16.0. If unresolved, installation remains blocked.</td></tr>
+<tr><td>mumu not found / wrong PATH</td><td>Activate the selected environment or use its bin/mumu absolute path. command -v mumu must point inside it.</td></tr>
+<tr><td>Missing key / 401</td><td>Repeat hidden session input and restart the agent. If rejected again, ask the administrator to inspect existing authorization privately. Do not request or issue keys through this guide.</td></tr>
+<tr><td>Host rejected</td><td>Compare the privately supplied HTTPS base URL with your setting. Do not bypass host checks or change the server. Ask the administrator if it still fails.</td></tr>
+<tr><td>Network timeout / protocol mismatch</td><td>Check approved network access and the agent's Streamable HTTP capability. Retry once. If it fails, report the category privately; do not change transports.</td></tr>
+<tr><td>Quota error</td><td>Wait until the returned reset time. Retry once after reset. Do not repeatedly probe or exhaust the allowance.</td></tr>
+<tr><td>Stale form version</td><td>Fetch get_intake_form again. Rebuild answers from your problem with the returned version. Do not edit a cached version string or invent answers.</td></tr>
+<tr><td>Invalid JSON or unreadable file</td><td>Correct the private JSON input and permissions. Re-run the same command; require successful JSON output.</td></tr></table>
+</main><footer>mumu · Apache-2.0</footer></body></html>

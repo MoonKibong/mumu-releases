@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mumu · 설치</title><link rel="stylesheet" href="../assets/site.css"></head>
+<body><a class="skip" href="#main">본문으로</a>
+<header><a href="start.html">mumu</a> · <a lang="en" href="../en/start.html">en</a>
+<details><summary>메뉴</summary><nav aria-label="Guide"><ul><li><a href="start.html">시작</a></li><li><a href="install.html">설치</a></li><li><a href="connect.html">연결</a></li><li><a href="agent-setup.html">에이전트 설정</a></li><li><a href="agent-usage.html">에이전트 사용</a></li><li><a href="cli-usage.html">CLI 사용</a></li><li><a href="troubleshoot.html">문제 해결</a></li><li><a href="maintain.html">유지 관리</a></li></ul></nav></details></header>
+<main id="main" tabindex="-1"><h1>클라이언트 설치</h1>
+<p>수신자가 수행한다. 설치 수명주기는 macOS arm64의 Python 3.11.14/3.15.0과 Linux aarch64의 Python 3.11.18/3.15.2에서 각각 Bash와 Zsh로 측정했다. <a href="maintain.html">검증 범위와 제한</a>을 참고한다. 직접 MCP 연결에는 Python과 CLI 설치가 필요 없다.</p>
+<ol><li><code>python3.11 --version</code> 또는 <code>python3.15 --version</code>을 실행한다. 선택한 버전이 출력되어야 한다. 없으면 조직에서 승인한 방법으로 해당 Python을 설치한 뒤 진행한다.</li>
+<li>아래 여섯 curl 명령으로 파일을 각각 받는다. 각 명령이 0으로 종료된 뒤 진행한다. 주소가 없으면 중단한다. latest 주소로 대체하지 않는다.</li>
+<li>SHA-256 명령을 실행한다. <code>SHA-256 OK</code>가 출력되어야 한다. wheel 해시를 관리자가 비공개로 전달한 승인 해시와 비교한다. 하나라도 다르면 파일을 삭제하고 중단한다. 같은 다운로드 출처에서 받은 체크섬만으로 진위를 증명할 수 없다.</li>
+<li>LICENSE, NOTICE와 DISTRIBUTION-NOTICE.txt를 읽는다. 명시된 자사 클라이언트는 Apache-2.0이며, 라이선스 권리 행사에 개별 소유자 허가는 필요하지 않다. 서비스 접근에는 기존 승인이 필요하다.</li>
+<li>아래 명령으로 격리 환경을 만들고 그 환경의 pip로 설치한다. 두 명령이 모두 0으로 종료된 뒤 진행한다. 공개 의존성은 비공개 인덱스와 캐시 없이 해결되어야 한다. 실패하면 <a href="troubleshoot.html">문제 해결</a>을 따른다. 고정 의존성을 바꾸지 않는다.</li>
+<li>환경을 활성화하고 마지막 세 명령을 실행한다. 실행 파일은 해당 환경 안에 있어야 하고, help는 0으로 종료되어야 하며, 메타데이터는 0.1.0을 출력해야 한다. 다른 파일이 선택되면 환경 안 실행 파일의 절대 경로를 사용한다.</li></ol>
+<p>아래는 Python 3.11 예시다. 필수 Python 3.15 검증에서는 모든 <code>python3.11</code>을 <code>python3.15</code>로 바꾼다. 각 명령을 따로 실행한다.</p>
+<pre><code># Recipient: run each step separately. Stop if a command fails.
+curl --fail --location --remote-name &#x27;https://github.com/MoonKibong/mumu-releases/releases/download/v0.1.0/mumu-0.1.0-py3-none-any.whl&#x27;
+curl --fail --location --remote-name &#x27;https://github.com/MoonKibong/mumu-releases/releases/download/v0.1.0/SHA256SUMS&#x27;
+curl --fail --location --remote-name &#x27;https://github.com/MoonKibong/mumu-releases/releases/download/v0.1.0/LICENSE&#x27;
+curl --fail --location --remote-name &#x27;https://github.com/MoonKibong/mumu-releases/releases/download/v0.1.0/NOTICE&#x27;
+curl --fail --location --remote-name &#x27;https://github.com/MoonKibong/mumu-releases/releases/download/v0.1.0/DISTRIBUTION-NOTICE.txt&#x27;
+curl --fail --location --remote-name &#x27;https://github.com/MoonKibong/mumu-releases/releases/download/v0.1.0/RELEASE-NOTES.txt&#x27;
+python3.11 -c &#x27;import hashlib,pathlib; rows=[line.split(&quot;  &quot;) for line in pathlib.Path(&quot;SHA256SUMS&quot;).read_text().splitlines()]; expected={&quot;mumu-0.1.0-py3-none-any.whl&quot;,&quot;DISTRIBUTION-NOTICE.txt&quot;,&quot;RELEASE-NOTES.txt&quot;,&quot;LICENSE&quot;,&quot;NOTICE&quot;,&quot;mumu-0.1.0-client-source.zip&quot;}; assert len(rows)==len(expected) and {n for h,n in rows}==expected; assert all(hashlib.sha256(pathlib.Path(n).read_bytes()).hexdigest()==h for h,n in rows if n!=&quot;mumu-0.1.0-client-source.zip&quot;); print(&quot;SHA-256 OK&quot;)&#x27;
+python3.11 -m venv &quot;$HOME/.local/share/mumu/0.1.0&quot;
+&quot;$HOME/.local/share/mumu/0.1.0/bin/python&quot; -m pip install &#x27;./mumu-0.1.0-py3-none-any.whl&#x27;
+. &quot;$HOME/.local/share/mumu/0.1.0/bin/activate&quot;
+command -v mumu
+mumu --help
+python -c &#x27;import importlib.metadata; assert importlib.metadata.version(&quot;mumu&quot;)==&quot;0.1.0&quot;; print(&quot;0.1.0&quot;)&#x27;
+</code></pre>
+<p>활성화는 현재 세션의 PATH만 바꾼다. 시작 파일을 수정하지 않는다. 세션 키 입력은 <a href="connect.html">연결</a>을 따른다.</p>
+
+<p><a href="https://github.com/MoonKibong/mumu-releases/releases/download/v0.1.0/mumu-0.1.0-client-source.zip">클라이언트 전용 소스 ZIP</a>의 README.txt에 빌드 절차가 있다. 빌드 전에 소스 ZIP의 SHA-256을 SHA256SUMS 및 관리자가 비공개로 전달한 승인 해시와 비교한다. 하나라도 다르면 중단한다. 이 압축 파일은 허용된 클라이언트 파일만으로 생성한다.</p>
+</main><footer>mumu · Apache-2.0</footer></body></html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mumu · 에이전트 설정</title><link rel="stylesheet" href="../assets/site.css"></head>
+<body><a class="skip" href="#main">본문으로</a>
+<header><a href="start.html">mumu</a> · <a lang="en" href="../en/start.html">en</a>
+<details><summary>메뉴</summary><nav aria-label="Guide"><ul><li><a href="start.html">시작</a></li><li><a href="install.html">설치</a></li><li><a href="connect.html">연결</a></li><li><a href="agent-setup.html">에이전트 설정</a></li><li><a href="agent-usage.html">에이전트 사용</a></li><li><a href="cli-usage.html">CLI 사용</a></li><li><a href="troubleshoot.html">문제 해결</a></li><li><a href="maintain.html">유지 관리</a></li></ul></nav></details></header>
+<main id="main" tabindex="-1"><h1>호환되는 모든 MCP 에이전트 연결</h1>
+<p>수신자는 에이전트의 MCP 설정에 다음 기능을 설정한다. 아래 항목은 연결 요건이며 공통 JSON 설정 스키마가 아니다. 직접 MCP 연결에는 Python이 필요 없다.</p>
+<table><tr><th>기능</th><th>요건</th></tr><tr><td>전송</td><td>HTTPS 원격 Streamable HTTP</td></tr><tr><td>엔드포인트</td><td>비공개 서비스 기본 URL 뒤에 /mcp 추가</td></tr><tr><td>인증</td><td>에이전트 비밀 관리 기능으로 MUMU_API_KEY를 Authorization bearer 헤더에 전달</td></tr><tr><td>프로토콜</td><td>배포 서버가 지원하는 버전 협상</td></tr><tr><td>호출</td><td>도구 검색 후 각 도구가 알리는 JSON 인자 스키마 준수</td></tr></table>
+<ol><li>제품 설정과 <a href="connect.html">연결</a>의 세션 키로 위 요건을 적용한다. 설정에는 키 참조와 비공개 엔드포인트가 있어야 한다. 설정 텍스트에 키를 붙여 넣지 않는다.</li>
+<li>키를 입력한 셸에서 에이전트를 재시작한다. 인증된 MCP 연결이 표시되어야 한다. OAuth 전용 또는 stdio 전용이면 이 직접 경로는 지원되지 않는다. 셸 도구가 있으면 CLI를 사용한다. 두 경로 모두 사용할 수 없으면 관리자에게 비공개로 문의한다.</li>
+<li>에이전트에서 도구를 검색한다. 검색 결과에 <code>recommend_patterns</code>, <code>get_pattern</code>, <code>get_related_patterns</code>, <code>check_composition</code>, <code>get_intake_form</code>과 각 인자 스키마가 있어야 한다. 하나라도 없으면 중단하고 관리자에게 비공개로 문의한다.</li>
+<li>검색된 스키마에 따라 본인이 작성한 일반 문제로 <code>recommend_patterns</code>를 호출하게 한다. 인증된 성공 결과를 받은 뒤에만 추천을 사용한다. 응답을 공개 로그에 저장하지 않는다. 협상이 실패하면 비공개로 보고한다. 최신 MCP 명세로 호환성을 추정하지 않는다.</li></ol>
+<p>과거의 독립 도구 검색과 인증 호출에서 프로토콜 2025-11-25를 협상했다. 현재 배포나 지원 버전 전체를 입증하지 않으며 다른 버전은 미검증이다. 제품의 MCP 표기만으로 요건이 증명되지 않는다. 브라우저는 서버 origin/CORS 정책도 맞아야 하며 브라우저 지원은 미검증이다.</p>
+<h2>제품 예시와 측정된 상호운용성</h2>
+<p>Codex CLI: <code>~/.codex/config.toml</code>에 아래 템플릿을 넣고 URL만 비공개 전체 엔드포인트로 바꾼 뒤 같은 셸에서 재시작한다. bearer 환경 설정의 근거는 <a href="https://learn.chatgpt.com/docs/extend/mcp?surface=cli">공식 Codex MCP 문서</a>다.</p>
+<pre><code>[mcp_servers.mumu]
+url = &quot;https://mumu.example.invalid/mcp&quot;
+bearer_token_env_var = &quot;MUMU_API_KEY&quot;
+</code></pre>
+<p>Claude Code: 비공개이며 추적하지 않는 수신자 작업 공간의 <code>.mcp.json</code>에 아래 JSON을 적용하고 URL만 바꾼 뒤 재시작한다. <code>type: http</code>와 환경 참조를 유지한다. <a href="https://code.claude.com/docs/en/mcp">공식 Claude Code MCP 문서</a>를 참고한다. 키를 포함하는 헤더 추가 명령을 실행하지 않는다.</p>
+<pre><code>{
+  &quot;mcpServers&quot;: {
+    &quot;mumu&quot;: {
+      &quot;type&quot;: &quot;http&quot;,
+      &quot;url&quot;: &quot;https://mumu.example.invalid/mcp&quot;,
+      &quot;headers&quot;: {
+        &quot;Authorization&quot;: &quot;Bearer ${MUMU_API_KEY}&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p>과거 macOS 검사에서 Codex CLI 0.167.1과 Claude Code 2.1.322의 실제 MCP 호스트로 도구 5개 검색과 명시적 인증 도구 호출을 수행했고 모델 호출은 0회였다. 이 증거는 변경되지 않은 표준 설정 입력에 적용되며 현재 설치된 에이전트 버전, 모델 주도 동작이나 모든 대화형 모드를 입증하지 않는다. <a href="maintain.html">검증 범위와 제한</a>을 참고한다.</p>
+</main><footer>mumu · Apache-2.0</footer></body></html>

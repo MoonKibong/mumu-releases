@@ -1,0 +1,21 @@
+mumu first-party licensing scope
+Copyright 2026 MoonKibong (kibong.moon@gmail.com)
+
+The first-party mumu thin-client source (src/mumu/*.py), client packaging
+files (pyproject.toml and MANIFEST.in), client wheel, public guides and assets
+(site/**), public configuration and instruction templates (site/templates/**),
+and the Pages workflow (.github/workflows/pages.yml) in this distribution
+are licensed under the Apache License, Version 2.0. The accompanying LICENSE
+contains the complete governing terms. This notice, NOTICE, README.txt and
+RELEASE-NOTES.txt are included in that first-party scope.
+
+Third-party components remain subject to their applicable licenses and notices.
+No third-party code, fonts, images or JavaScript are bundled in this distribution.
+The Python dependencies are installed separately; their own distributions carry
+their applicable terms and notices. Build tools are not bundled.
+
+This distribution does not include or license the private mumu development
+repository, server, recommendation engine, catalog or server data. Downloading
+it does not issue credentials, create an account or grant hosted-service access.
+Hosted-service access and support may be subject to separate terms. This scope
+notice does not modify Apache-2.0 or restrict commercial use or redistribution.

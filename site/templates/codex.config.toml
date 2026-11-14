@@ -1,0 +1,3 @@
+[mcp_servers.mumu]
+url = "https://mumu.example.invalid/mcp"
+bearer_token_env_var = "MUMU_API_KEY"

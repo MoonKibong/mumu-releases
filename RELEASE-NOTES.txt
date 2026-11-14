@@ -1,0 +1,17 @@
+mumu 0.1.0 — Apache-2.0 thin client
+Copyright 2026 MoonKibong (kibong.moon@gmail.com)
+Two connection paths: compatible remote MCP agents and the thin Python CLI.
+English and Korean guides; measured installation coverage is described in site/en/maintain.html
+and site/ko/maintain.html.
+The first-party client and identified public guides/templates use Apache-2.0.
+See LICENSE, NOTICE and DISTRIBUTION-NOTICE.txt for terms and scope.
+Installation lifecycle was measured on macOS arm64 Python 3.11.14/3.15.0 and
+Linux aarch64 Python 3.11.18/3.15.2, each with Bash and Zsh. These results cover
+public dependency resolution, session input/inheritance/PATH, help, metadata,
+same-version reinstall and uninstall. They do not certify other environments.
+Historical authentication and explicit agent tool calls cover unchanged runtime
+and template inputs; they do not establish authentication of every rebuilt wheel,
+current deployment/agent versions or model-driven behavior. Browser evidence is
+limited to Chrome 157.0.8103.51 and the named guide surfaces and viewports in Maintain.
+This initial release has no previous release for cross-version upgrade or rollback.
+Downloading the client grants no hosted-service access.

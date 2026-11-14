@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mumu · CLI usage</title><link rel="stylesheet" href="../assets/site.css"></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header><a href="start.html">mumu</a> · <a lang="ko" href="../ko/start.html">ko</a>
+<details><summary>Menu</summary><nav aria-label="Guide"><ul><li><a href="start.html">Start</a></li><li><a href="install.html">Install</a></li><li><a href="connect.html">Connect</a></li><li><a href="agent-setup.html">Agent setup</a></li><li><a href="agent-usage.html">Agent usage</a></li><li><a href="cli-usage.html">CLI usage</a></li><li><a href="troubleshoot.html">Troubleshoot</a></li><li><a href="maintain.html">Maintain</a></li></ul></nav></details></header>
+<main id="main" tabindex="-1"><h1>CLI usage</h1>
+<p>You or an agent with shell access can run these commands. The CLI is a remote client, not a stdio MCP server. Follow <a href="connect.html">Connect</a> first. The examples use English; add <code>--lang ko</code> to recommend, show and intake-form for Korean results.</p>
+<ol><li>Run the first recommendation below for your own problem. A successful JSON result supplies identifiers for use within your private session. Set <code>PATTERN_ID</code> and <code>OTHER_PATTERN_ID</code> only from that private session; do not invent example identifiers.</li>
+<li>If intake is useful, run intake-form without redirecting it into a repository. Read the returned form and its version before preparing answers. Prepare <code>intake.json</code> privately using that version and evidence from the exact problem; leave unstated answers unknown. If the version is stale, fetch a new form and rebuild answers.</li>
+<li>If you supply declared context, create <code>context.json</code> in a private temporary workspace from facts and paths accepted by the advertised schema. Use it with the recommendation command below; the service must accept the input. Do not invent registered facts. The context and intake are separate inputs; intake does not overwrite context.</li>
+<li>Run show and related using returned identifiers. Each command must return successful JSON. Before a combination, create <code>couplings.json</code> as a list of two-identifier arrays naming actual edges, then run check. Use the result to review only checked couplings and preserve unregistered ones as unverified.</li></ol>
+<pre><code>mumu --server &quot;$MUMU_BASE_URL&quot; recommend &#x27;Our shared calendar loses an unsaved edit when a colleague updates the same event.&#x27; --lang en --format json
+mumu --server &quot;$MUMU_BASE_URL&quot; intake-form software --lang en --format json
+mumu --server &quot;$MUMU_BASE_URL&quot; recommend &#x27;Our shared calendar loses an unsaved edit when a colleague updates the same event.&#x27; --context context.json --intake intake.json --format json
+mumu --server &quot;$MUMU_BASE_URL&quot; show &quot;$PATTERN_ID&quot; --lang en --format json
+mumu --server &quot;$MUMU_BASE_URL&quot; related &quot;$PATTERN_ID&quot; --context context.json --format json
+mumu --server &quot;$MUMU_BASE_URL&quot; check &quot;$PATTERN_ID&quot; &quot;$OTHER_PATTERN_ID&quot; --couplings couplings.json --context context.json --format json
+</code></pre>
+<p>JSON is the default; <code>--format text</code> is available. Keep input files and output private and outside tracked repositories. Delete temporary forms/answers/context/couplings after the task. If a call fails, follow <a href="troubleshoot.html">Troubleshoot</a>; do not treat an error as a recommendation.</p>
+</main><footer>mumu · Apache-2.0</footer></body></html>

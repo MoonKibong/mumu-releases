@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mumu · Agent setup</title><link rel="stylesheet" href="../assets/site.css"></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header><a href="start.html">mumu</a> · <a lang="ko" href="../ko/start.html">ko</a>
+<details><summary>Menu</summary><nav aria-label="Guide"><ul><li><a href="start.html">Start</a></li><li><a href="install.html">Install</a></li><li><a href="connect.html">Connect</a></li><li><a href="agent-setup.html">Agent setup</a></li><li><a href="agent-usage.html">Agent usage</a></li><li><a href="cli-usage.html">CLI usage</a></li><li><a href="troubleshoot.html">Troubleshoot</a></li><li><a href="maintain.html">Maintain</a></li></ul></nav></details></header>
+<main id="main" tabindex="-1"><h1>Connect any compatible MCP agent</h1>
+<p>Configure the following capabilities in your agent's MCP settings. These are connection requirements, not a universal JSON configuration schema. Direct MCP does not require Python.</p>
+<table><tr><th>Capability</th><th>Requirement</th></tr><tr><td>Transport</td><td>Remote Streamable HTTP over HTTPS</td></tr><tr><td>Endpoint</td><td>Privately supplied service base URL plus /mcp</td></tr><tr><td>Authentication</td><td>Authorization bearer header from MUMU_API_KEY through the agent's secret mechanism</td></tr><tr><td>Protocol</td><td>Negotiate a version the deployed server supports</td></tr><tr><td>Invocation</td><td>Discover tools; follow their advertised JSON argument schemas</td></tr></table>
+<ol><li>Apply these capabilities using your product's settings and the session key from <a href="connect.html">Connect</a>. The resulting settings must contain a secret reference and the private endpoint. Do not paste a key into configuration text.</li>
+<li>Restart the agent from the shell where you entered the key. The agent must report an authenticated MCP connection. If it offers only OAuth or stdio, this direct path is unsupported; use the CLI if shell tools are available. If neither path is available, contact your administrator privately.</li>
+<li>Use the agent's tool discovery. The result must include <code>recommend_patterns</code>, <code>get_pattern</code>, <code>get_related_patterns</code>, <code>check_composition</code> and <code>get_intake_form</code>, with argument schemas. If any is absent, stop and contact your administrator privately.</li>
+<li>Ask the agent to call <code>recommend_patterns</code> for your own generic problem using the discovered schema. Require a successful authenticated result before using the recommendations. Do not save the response in public logs. If negotiation fails, report it privately; do not infer compatibility from the latest MCP specification.</li></ol>
+<p>Historical independent discovery and an authenticated call negotiated protocol 2025-11-25. This does not attest the current deployment or its full supported-version set; other versions remain unverified. A product's MCP label alone proves none of these capabilities. Browser clients also need compatible server origin/CORS policy; browser support is unverified.</p>
+<h2>Product examples and measured interoperability</h2>
+<p>Codex CLI: place the template below in <code>~/.codex/config.toml</code>, replace only the URL with your private full endpoint, and restart from the same shell. The bearer environment setting is documented in <a href="https://learn.chatgpt.com/docs/extend/mcp?surface=cli">official Codex MCP documentation</a>.</p>
+<pre><code>[mcp_servers.mumu]
+url = &quot;https://mumu.example.invalid/mcp&quot;
+bearer_token_env_var = &quot;MUMU_API_KEY&quot;
+</code></pre>
+<p>Claude Code: use the JSON below as <code>.mcp.json</code> in a private, untracked recipient workspace, replace only the URL, and restart. Keep <code>type: http</code> and the environment reference. See <a href="https://code.claude.com/docs/en/mcp">official Claude Code MCP documentation</a>. Do not run header-adding commands containing the key.</p>
+<pre><code>{
+  &quot;mcpServers&quot;: {
+    &quot;mumu&quot;: {
+      &quot;type&quot;: &quot;http&quot;,
+      &quot;url&quot;: &quot;https://mumu.example.invalid/mcp&quot;,
+      &quot;headers&quot;: {
+        &quot;Authorization&quot;: &quot;Bearer ${MUMU_API_KEY}&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p>Historical macOS checks of Codex CLI 0.167.1 and Claude Code 2.1.322 used their actual MCP hosts for five-tool discovery and explicit authenticated tool calls, with zero model invocations. Evidence applies to unchanged canonical configuration inputs; it does not attest current installed agent versions, model-driven behavior or every interactive mode. See <a href="maintain.html">coverage and limitations</a>.</p>
+</main><footer>mumu · Apache-2.0</footer></body></html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mumu · Agent usage</title><link rel="stylesheet" href="../assets/site.css"></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header><a href="start.html">mumu</a> · <a lang="ko" href="../ko/start.html">ko</a>
+<details><summary>Menu</summary><nav aria-label="Guide"><ul><li><a href="start.html">Start</a></li><li><a href="install.html">Install</a></li><li><a href="connect.html">Connect</a></li><li><a href="agent-setup.html">Agent setup</a></li><li><a href="agent-usage.html">Agent usage</a></li><li><a href="cli-usage.html">CLI usage</a></li><li><a href="troubleshoot.html">Troubleshoot</a></li><li><a href="maintain.html">Maintain</a></li></ul></nav></details></header>
+<main id="main" tabindex="-1"><h1>Use tools for decision support</h1>
+<p>Give the following catalog-free text to your connected agent in your chosen instruction mechanism. In its next result, look for the tool guidance below and explicit unknowns. If it claims approval or invents facts, stop and correct the instruction before relying on the result. No product-specific instruction file is required.</p>
+<pre><code>Actor: the recipient&#x27;s agent. Use these instructions only with an authorized mumu connection.
+1. Read the user&#x27;s problem. Record only facts stated in that problem or measurements the user supplies. Preserve unknowns. Check: every asserted fact has a source in that material; otherwise leave it unknown.
+2. Call recommend_patterns for an open problem, using the advertised argument schema. Use only evidence quotes from that problem. Check: distinguish candidates and questions from a final human decision. Never return implementation approval.
+3. If structured intake would help, call get_intake_form with the problem&#x27;s scope and language. Use the returned form_version for that session. Do not invent answers. Mark unstated answers unknown or omit them. Do not save forms or answers in a project repository. Check: each true/false answer quotes the supplied problem. If the server rejects the version, fetch a fresh form and rebuild the answers.
+4. Call get_pattern for an identifier returned during the current private session when its application record is needed. Check: use the returned constraints and tradeoffs in the decision; do not reproduce private records in public artifacts.
+5. Call get_related_patterns before selecting combinations. Check: record the returned required or conflicting relations and preserve missing relations as unknown.
+6. Call check_composition with the selected identifiers and actual couplings from the user&#x27;s design. Check: assess only those couplings; an unregistered coupling remains unverified. Do not label it safe.
+7. If discovery, authentication or a tool call fails, report the failure without claiming a result. Ask the authorized administrator privately for connection help. Do not print the key or an authenticated response into diagnostics.
+A form request and a recommendation each consume one search. A fresh pair consumes two.
+The server receives the issue, answers and supplied evidence. It does not retain them in its audit log or cache. Agent and provider history have separate retention policies; this is not end-to-end zero retention.
+Generic user-authored example: Our shared calendar loses an unsaved edit when a colleague updates the same event. Help us identify questions to investigate. We have not measured frequency or recovery time.
+</code></pre>
+<p><a href="../templates/agent-instructions.txt">Download the same instruction text</a>. Read your agent/provider retention policy before sending sensitive problems. Do not save retrieved records, forms or answers in public artifacts.</p>
+</main><footer>mumu · Apache-2.0</footer></body></html>

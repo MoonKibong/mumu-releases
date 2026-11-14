@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mumu · Connect</title><link rel="stylesheet" href="../assets/site.css"></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header><a href="start.html">mumu</a> · <a lang="ko" href="../ko/start.html">ko</a>
+<details><summary>Menu</summary><nav aria-label="Guide"><ul><li><a href="start.html">Start</a></li><li><a href="install.html">Install</a></li><li><a href="connect.html">Connect</a></li><li><a href="agent-setup.html">Agent setup</a></li><li><a href="agent-usage.html">Agent usage</a></li><li><a href="cli-usage.html">CLI usage</a></li><li><a href="troubleshoot.html">Troubleshoot</a></li><li><a href="maintain.html">Maintain</a></li></ul></nav></details></header>
+<main id="main" tabindex="-1"><h1>Connect privately</h1>
+<p>The CLI requires the service base URL; it appends <code>/mcp</code>. Direct MCP requires the full HTTPS URL ending in <code>/mcp</code>. The placeholder <code>https://mumu.example.invalid</code> is deliberately unreachable.</p>
+<ol><li>Set the base URL in the current shell: <code>MUMU_BASE_URL='https://mumu.example.invalid'</code>, replacing the placeholder with the privately supplied base URL. Use a base URL without the <code>/mcp</code> suffix. Do not include a key, userinfo or query string in a URL.</li>
+<li>Source the matching session snippet below in your interactive shell and type the key at its hidden prompt. Run <code>test -n "$MUMU_API_KEY"</code>; it must exit zero. If input fails, stop and retry privately. Do not print the variable.</li>
+<li>Start or fully restart your agent from that same shell. Confirm that direct MCP discovers all five tools and makes one authenticated call by following <a href="agent-setup.html">Agent setup</a>. A running agent cannot inherit a later environment change. If the CLI path is selected, run the first recommendation in <a href="cli-usage.html">CLI usage</a> and require a successful JSON response.</li></ol>
+<h2>Bash session</h2><pre><code># Recipient: source this file in an interactive bash session with tracing disabled.
+# Do not execute it as a child process: the agent must inherit this shell&#x27;s environment.
+set +x
+IFS= read -r -s -p &quot;Mumu API key: &quot; MUMU_API_KEY || return 1
+printf &#x27;\n&#x27;
+[ -n &quot;$MUMU_API_KEY&quot; ] || return 1
+export MUMU_API_KEY
+# Success: test -n &quot;$MUMU_API_KEY&quot;. Do not print its value.
+</code></pre>
+<h2>Zsh session</h2><pre><code># Recipient: source this file in an interactive zsh session with tracing disabled.
+# Do not execute it as a child process: the agent must inherit this shell&#x27;s environment.
+set +x
+IFS= read -r -s &quot;MUMU_API_KEY?Mumu API key: &quot; || return 1
+printf &#x27;\n&#x27;
+[ -n &quot;$MUMU_API_KEY&quot; ] || return 1
+export MUMU_API_KEY
+# Success: test -n &quot;$MUMU_API_KEY&quot;. Do not print its value.
+</code></pre>
+<p>Keep keys out of arguments, URLs, chat, tracked files, browser forms/storage and diagnostics. Do not use a persistent installer export. If persistent environment setup is separately requested on the operator's machine, the operator puts exports only in <code>~/.config/shell/env.sh</code>; do not edit startup profiles. At session end run <code>unset MUMU_API_KEY</code> and exit the agent.</p>
+</main><footer>mumu · Apache-2.0</footer></body></html>

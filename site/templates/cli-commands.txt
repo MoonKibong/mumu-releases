@@ -1,0 +1,6 @@
+mumu --server "$MUMU_BASE_URL" recommend 'Our shared calendar loses an unsaved edit when a colleague updates the same event.' --lang en --format json
+mumu --server "$MUMU_BASE_URL" intake-form software --lang en --format json
+mumu --server "$MUMU_BASE_URL" recommend 'Our shared calendar loses an unsaved edit when a colleague updates the same event.' --context context.json --intake intake.json --format json
+mumu --server "$MUMU_BASE_URL" show "$PATTERN_ID" --lang en --format json
+mumu --server "$MUMU_BASE_URL" related "$PATTERN_ID" --context context.json --format json
+mumu --server "$MUMU_BASE_URL" check "$PATTERN_ID" "$OTHER_PATTERN_ID" --couplings couplings.json --context context.json --format json
